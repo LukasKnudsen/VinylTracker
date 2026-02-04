@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* OKLCH tokens */
 :root {
   --background: 0.98 0.01 250;
   --foreground: 0.20 0.02 250;
