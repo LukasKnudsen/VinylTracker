@@ -3,9 +3,10 @@ import VinylItem from "./VinylItem";
 
 type Props = {
   items: Vinyl[];
+  onRemove: (id: string) => void;
 };
 
-export default function VinylList({ items }: Props) {
+export default function VinylList({ items, onRemove }: Props) {
   return (
     <section className="w-full">
       <header className="mb-3 flex items-center justify-between">
@@ -22,7 +23,11 @@ export default function VinylList({ items }: Props) {
       ) : (
         <ul className="space-y-3">
           {items.map((v) => (
-            <VinylItem key={v.id} vinyl={v} />
+            <VinylItem
+              key={v.id}
+              vinyl={v}
+              onRemove={onRemove}
+            />
           ))}
         </ul>
       )}

@@ -13,6 +13,10 @@ export default function Home() {
     }
     setItems((prev) => [newVinyl, ...prev])
   }
+
+  function removeVinyl(id: string) {
+    setItems((prev) => prev.filter((v) => v.id !== id))
+  }
   
   return (
     <div className="min-h-screen">
@@ -26,9 +30,9 @@ export default function Home() {
           <VinylForm onSubmit={addVinyl} />
         </div>
 
-        <div className="rounded-xl border border-border bg-background p-6">
-          <VinylList items={items} />
-        </div>
+          <div className="rounded-xl border border-border bg-background p-6">
+            <VinylList items={items} onRemove={removeVinyl} />        
+          </div>
       </div>
     </div>
   )
