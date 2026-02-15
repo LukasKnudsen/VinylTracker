@@ -15,6 +15,12 @@ export default function Home() {
   }
 
   function removeVinyl(id: string) {
+    const confirmed = window.confirm(
+      "Are you sure, you want to delete this vinyl?"
+    )
+  
+    if (!confirmed) return
+  
     setItems((prev) => prev.filter((v) => v.id !== id))
   }
   
