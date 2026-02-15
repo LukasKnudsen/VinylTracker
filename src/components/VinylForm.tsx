@@ -65,9 +65,13 @@ export default function VinylForm({ onSubmit }: Props) {
               <input
                 className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
                 value={year}
-                onChange={(e) => setYear(e.target.value)}
+                onChange={(e) => {
+                  const onlyDigits = e.target.value.replace(/\D/g, "")
+                  setYear(onlyDigits.slice(0, 4))
+                }}
                 placeholder="2007"
                 inputMode="numeric"
+                pattern="\d*"
               />
             </div>
     

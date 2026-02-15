@@ -20,7 +20,7 @@ export default function Home() {
         <div className="rounded-xl border border-border bg-background p-6">
           <h2 className="text-lg font-semibold">Add vinyls</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Fill in the fields and add to your local list.
+            Fill in the fields and add to your list.
           </p>
 
           <VinylForm onSubmit={addVinyl} />
