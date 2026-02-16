@@ -1,6 +1,7 @@
 import * as React from "react"
 import VinylList from "../components/VinylList"
 import VinylForm from "../components/VinylForm"
+import Header from "../components/Header"
 import type { Vinyl, VinylInput } from "../types/vinyl"
 
 export default function Home() {
@@ -25,21 +26,24 @@ export default function Home() {
   }
   
   return (
-    <div className="min-h-screen">
-      <div className="mx-auto max-w-6xl p-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="rounded-xl border border-border bg-background p-6">
-          <h2 className="text-lg font-semibold">Add vinyls</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Fill in the fields and add to your list.
-          </p>
+    <div className="min-h-screen bg-muted/20">
+      <Header />
 
-          <VinylForm onSubmit={addVinyl} />
+      <main className="mx-auto max-w-6xl p-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <section className="rounded-xl border border-border bg-background p-6">
+            <h2 className="text-lg font-semibold">Add vinyls</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Fill in the fields and add to your list.
+            </p>
+            <VinylForm onSubmit={addVinyl} />
+          </section>
+
+          <section className="rounded-xl border border-border bg-background p-6">
+            <VinylList items={items} onRemove={removeVinyl} />
+          </section>
         </div>
-
-          <div className="rounded-xl border border-border bg-background p-6">
-            <VinylList items={items} onRemove={removeVinyl} />        
-          </div>
-      </div>
+      </main>
     </div>
   )
 }
