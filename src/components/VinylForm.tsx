@@ -86,7 +86,17 @@ export default function VinylForm({ onSubmit }: Props) {
             </div>
           </div>
     
-          <Button type="submit">Add vinyl</Button>
+          <Button
+            type="submit"
+            className="w-full text-base font-semibold py-3 border-1 border-primary shadow-md hover:shadow-lg hover:border-primary/80 transition"
+          >
+            Add vinyl
+          </Button>
+
+
+
+
+
         </form>
       )
     }
