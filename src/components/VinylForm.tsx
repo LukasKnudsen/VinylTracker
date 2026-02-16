@@ -93,10 +93,6 @@ export default function VinylForm({ onSubmit }: Props) {
             Add vinyl
           </Button>
 
-
-
-
-
         </form>
       )
     }
