@@ -1,49 +1,63 @@
-import * as React from "react"
-import VinylList from "../components/VinylList"
-import VinylForm from "../components/VinylForm"
-import Header from "../components/Header"
-import type { Vinyl, VinylInput } from "../types/vinyl"
+import * as React from "react";
+import type { Vinyl } from "../types/vinyl";
+import VinylForm from "../components/VinylForm";
+import VinylList from "../components/VinylList";
+import { fetchVinyls, createVinyl, deleteVinyl } from "../services/vinyls";
 
 export default function Home() {
-  const [items, setItems] = React.useState<Vinyl[]>([])
+  const [vinyls, setVinyls] = React.useState<Vinyl[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-  function addVinyl(input: VinylInput) {
-    const newVinyl: Vinyl = {
-      id: crypto.randomUUID(),
-      ...input,
+  React.useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await fetchVinyls();
+        if (alive) setVinyls(data);
+      } catch (e) {
+        if (alive) setError(e instanceof Error ? e.message : String(e));
+      } finally {
+        if (alive) setLoading(false);
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  async function handleAdd(v: Omit<Vinyl, "id">) {
+    try {
+      setError(null);
+      const saved = await createVinyl(v);
+      setVinyls((prev) => [saved, ...prev]);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
     }
-    setItems((prev) => [newVinyl, ...prev])
   }
 
-  function removeVinyl(id: string) {
-    const confirmed = window.confirm(
-      "Are you sure, you want to delete this vinyl?"
-    )
-  
-    if (!confirmed) return
-  
-    setItems((prev) => prev.filter((v) => v.id !== id))
+  async function handleDelete(id: string) {
+    try {
+      setError(null);
+      await deleteVinyl(id);
+      setVinyls((prev) => prev.filter((x) => x.id !== id));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : String(e));
+    }
   }
-  
+
   return (
-    <div className="min-h-screen bg-muted/20">
-      <Header />
+    <div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <main className="mx-auto max-w-6xl p-6">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <section className="rounded-xl border border-border bg-background p-6">
-            <h2 className="text-lg font-semibold">Add vinyls</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Fill in the fields and add to your list.
-            </p>
-            <VinylForm onSubmit={addVinyl} />
-          </section>
+      <VinylForm onSubmit={handleAdd} />
 
-          <section className="rounded-xl border border-border bg-background p-6">
-            <VinylList items={items} onRemove={removeVinyl} />
-          </section>
-        </div>
-      </main>
+      {loading ? (
+        <p>Loading…</p>
+      ) : (
+        <VinylList items={vinyls} onRemove={handleDelete} />
+      )}
     </div>
-  )
+  );
 }
