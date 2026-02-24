@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Vinyl } from "../types/vinyl";
 import VinylForm from "../components/VinylForm";
 import VinylList from "../components/VinylList";
+import Header from "../components/Header";
 import { fetchVinyls, createVinyl, deleteVinyl } from "../services/vinyls";
 
 export default function Home() {
@@ -49,15 +50,25 @@ export default function Home() {
 
   return (
     <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <Header />
 
-      <VinylForm onSubmit={handleAdd} />
+      <main className="mx-auto max-w-6xl px-6 py-6">
+        {error && <p className="mb-4 text-red-500">{error}</p>}
 
-      {loading ? (
-        <p>Loading…</p>
-      ) : (
-        <VinylList items={vinyls} onRemove={handleDelete} />
-      )}
+        <div className="grid gap-6 md:grid-cols-2">
+          <section>
+            <VinylForm onSubmit={handleAdd} />
+          </section>
+
+          <section>
+            {loading ? (
+              <p>Loading vinyls</p>
+            ) : (
+              <VinylList items={vinyls} onRemove={handleDelete} />
+            )}
+          </section>
+        </div>
+      </main>
     </div>
   );
 }
