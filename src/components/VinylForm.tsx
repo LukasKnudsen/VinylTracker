@@ -30,7 +30,6 @@ export default function VinylForm({ onSubmit }: Props) {
         genre: genre.trim() === "" ? undefined : genre.trim(),
       })
   
-      // reset that shit
       setArtist("")
       setTitle("")
       setYear("")
