@@ -29,13 +29,13 @@ export default function VinylItem({ vinyl, onRemove }: Props) {
       )}
 
       <button
-        onClick={() => onRemove(vinyl.id)}
-        className="
-        absolute bottom-2 right-3
-        text-xs text-red-500
-        opacity-0 group-hover:opacity-100
-        transition-opacity
-      "
+        onClick={() => {
+          const ok = window.confirm(
+            `Are you sure you want to delete "${vinyl.artist} - ${vinyl.title}"?`
+          );
+          if (ok) onRemove(vinyl.id);
+        }}
+        className="absolute bottom-2 right-3 text-xs text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
       >
         Remove vinyl
       </button>
