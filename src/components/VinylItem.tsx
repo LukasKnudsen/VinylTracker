@@ -31,7 +31,7 @@ export default function VinylItem({ vinyl, onRemove }: Props) {
       <button
         onClick={() => {
           const ok = window.confirm(
-            `Confirm you want to delete "${vinyl.artist} - ${vinyl.title}"?`
+            `Confirm you want to delete "${vinyl.artist} - ${vinyl.title} from the database"?`
           );
           if (ok) onRemove(vinyl.id);
         }}
