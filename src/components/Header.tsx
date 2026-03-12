@@ -5,9 +5,6 @@ export default function Header() {
           <h1 className="text-center text-2xl font-semibold tracking-tight">
             Vinyl tracker
           </h1>
-          <p className="mt-1 text-center text-sm text-muted-foreground">
-            Keep track of your records
-          </p>
         </div>
       </header>
     )
